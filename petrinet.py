@@ -53,9 +53,9 @@ class PetriNet:
         trans.no_tokens = 0
 
     def output_state(self):
-        for it, place in enumerate(self.place_list):
+        for place in self.place_list:
             print("Tokens in " + place.name + ": " + str(place.no_tokens))
-        print("\n")
+        print()
 
 
 def create_net_from_file(file):
