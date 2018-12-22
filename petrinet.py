@@ -11,19 +11,13 @@ class Place:
 
 
 class Transition:
-    no_tokens = 0
-    in_adj = []
-    out_adj = []
-
     def __init__(self, iadj, oadj):
+        self.no_tokens = 0
         self.in_adj = iadj
         self.out_adj = oadj
 
 
 class PetriNet:
-    place_list = []
-    trans_list = []
-
     def __init__(self, pl, tl):
         self.place_list = pl
         self.trans_list = tl
@@ -153,6 +147,6 @@ def generate_net_file(file):
             arc_ctd_place = input("Place where arc " + str(arc) + " is going to: ")
             arc_weight = input("Weight of arc " + str(arc) + ": ")
             file.write(arc_ctd_place + " " + arc_weight + "\n")
-    print("\n")
+    print()
 
     file.close()
