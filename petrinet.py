@@ -53,10 +53,8 @@ class PetriNet:
         trans.no_tokens = 0
 
     def output_state(self):
-        it = 0
-        for place in self.place_list:
+        for it, place in enumerate(self.place_list):
             print("Tokens in " + place.name + ": " + str(place.no_tokens))
-            it += 1
         print("\n")
 
 
@@ -68,37 +66,33 @@ def create_net_from_file(file):
     names = file.readline().strip().split(" ")
     no_tokens = file.readline().strip().split(" ")
 
-    for place_it in range(0, int(no_elem[0])):
+    for place_it in range(int(no_elem[0])):
         temp_place = Place(names[place_it], int(no_tokens[place_it]))
 
         place_list.append(temp_place)
 
-    for trans_it in range(0, int(no_elem[1])):
+    for trans_it in range(int(no_elem[1])):
         trans_adj = file.readline().split(" ")
 
         arc_list_in = []
         arc_list_out = []
 
-        for trans_in_it in range(0, int(trans_adj[0])):
+        for trans_in_it in range(int(trans_adj[0])):
             ctd_place, weight = file.readline().split(" ")
 
-            ctd_place_id = 0
-            for place in place_list:
+            for ctd_place_id, place in enumerate(place_list):
                 if place.name == ctd_place:
                     break
-                ctd_place_id += 1
 
             temp_arc = Arc(ctd_place_id, int(weight))
             arc_list_in.append(temp_arc)
 
-        for trans_in_it in range(0, int(trans_adj[1])):
+        for trans_in_it in range(int(trans_adj[1])):
             ctd_place, weight = file.readline().split(" ")
 
-            ctd_place_id = 0
-            for place in place_list:
+            for ctd_place_id, place in enumerate(place_list):
                 if place.name == ctd_place:
                     break
-                ctd_place_id += 1
 
             temp_arc = Arc(ctd_place_id, int(weight))
             arc_list_out.append(temp_arc)
@@ -119,7 +113,7 @@ def generate_net_file(file):
     name_list = []
     token_list = []
 
-    for place in range(0, int(no_places)):
+    for place in range(int(no_places)):
         name = input("Name of the place: ")
         name_list.append(name)
         no_tokens = input("Number of tokens in place " + name + ": ")
@@ -133,17 +127,17 @@ def generate_net_file(file):
         file.write(tokens + " ")
     file.write("\n")
 
-    for trans in range(0, int(no_trans)):
+    for trans in range(int(no_trans)):
         no_inputs = input("Number of arcs going into transition " + str(trans) + ": ")
         no_outputs = input("Number of arcs going out of transition " + str(trans) + ": ")
         file.write(no_inputs + " " + no_outputs + "\n")
 
-        for arc in range(0, int(no_inputs)):
+        for arc in range(int(no_inputs)):
             arc_ctd_place = input("Place where arc " + str(arc) + " is coming from: ")
             arc_weight = input("Weight of arc " + str(arc) + ": ")
             file.write(arc_ctd_place + " " + arc_weight + "\n")
 
-        for arc in range(0, int(no_outputs)):
+        for arc in range(int(no_outputs)):
             arc_ctd_place = input("Place where arc " + str(arc) + " is going to: ")
             arc_weight = input("Weight of arc " + str(arc) + ": ")
             file.write(arc_ctd_place + " " + arc_weight + "\n")
